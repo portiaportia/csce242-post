@@ -1,0 +1,23 @@
+body {
+    background:lightgreen;
+}
+
+#songs {
+    width:80%;
+    margin:auto;
+}
+
+.song {
+    padding:10px;
+    margin:10px;
+    background:lightpink;
+    border:3px solid white;
+}
+
+.song-form {
+    width:40%;
+    background:skyblue;
+    border:3px solid white;
+    padding:10px;
+    margin:10px auto;
+}
