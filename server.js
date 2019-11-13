@@ -32,6 +32,18 @@ app.get('/',(req,res)=>{
     res.sendFile(__dirname + '/index.html');
 });
 
+app.post('/api/songs', (req,res)=>{
+    const song = {
+        id:songs.length + 1,
+        name : req.body.name,
+        singer : req.body.singer,
+        genre : req.body.genre
+    }
+    console.log("name is: " + req.body.name);
+    songs.push(song);
+    res.send(song);
+});
+
 //listen
 const port = process.env.PORT || 3000;
 app.listen(port, ()=>{
