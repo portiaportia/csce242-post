@@ -2,6 +2,7 @@ async function showSongs(){
     let songsJson = await fetch('api/songs');
     let songs = await songsJson.json();
     let songsDiv = document.getElementById("songs");
+    songsDiv.innerHTML = "";
 
     for(i in songs){
         songsDiv.append(getSongElem(songs[i]));
@@ -50,8 +51,13 @@ async function addSong(){
         body: JSON.stringify(song),
     });
 
+    if(respose != 200){
+        console.log("Error adding song");
+        return;
+    }
+
     let result = await response.json();
-    console.log("Resposne from server: " + result);
+    showSongs();
 }
 
 window.onload = function(){

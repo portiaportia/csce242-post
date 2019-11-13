@@ -33,6 +33,18 @@ app.get('/',(req,res)=>{
 });
 
 app.post('/api/songs', (req,res)=>{
+    const schema = {
+        name:Joi.string().min(3).required(),
+        singer:Joi.string().min(4).required(),
+        genre:Joi.string().required()
+    }
+
+    const result = Joi.validate(req.body, schema);
+
+    if(result.error){
+        res.status(400).send(result.error.details[0].message);
+    }
+
     const song = {
         id:songs.length + 1,
         name : req.body.name,
