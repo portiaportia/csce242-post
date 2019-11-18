@@ -9,6 +9,7 @@
         <h1>Christmas Songs</h1>
         <div id="songs"></div>
 
+        <!-- Show Specific Song-->
         <div class="song-form">
             <h3>Show A Song:</h3>
             <p>
@@ -19,6 +20,7 @@
             <div id="song"></div>
         </div>
 
+        <!-- Add a Song-->
         <div class="song-form">
             <h3>Create a Song</h3>
             <p>
@@ -34,6 +36,27 @@
                 <input id="txt-new-song-genre">
             </p>
             <button id="btn-add-song">Add Song</button>
+        </div>
+
+        <!--Edit a Song-->
+        <div id="edit-song-form" class="song-form">
+            <h3>Edit a Song</h3>
+            <p>
+                Song Id:<span id="edit-song-id"></span>
+            </p>
+            <p>
+                <label for="txt-new-song-name">Song Name:</label>
+                <input id="txt-edit-song-name">
+            </p>
+            <p>
+                <label for="new-song-singer">Singer:</label>
+                <input id="txt-edit-song-singer">
+            </p>
+            <p>
+                <label for="txt-new-song-genre">Genre:</label>
+                <input id="txt-edit-song-genre">
+            </p>
+            <button id="btn-edit-song">Edit Song</button>
         </div>
     </body>
 </html>
