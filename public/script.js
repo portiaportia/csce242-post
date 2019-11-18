@@ -84,7 +84,7 @@ async function addSong(){
         body: JSON.stringify(song),
     });
 
-    if(response != 200){
+    if(response.status != 200){
         console.log("Error adding song");
         return;
     }
