@@ -32,14 +32,18 @@ app.get('/',(req,res)=>{
     res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/api/songs', (req,res)=>{
+function validateSong(song){
     const schema = {
         name:Joi.string().min(3).required(),
         singer:Joi.string().min(4).required(),
         genre:Joi.string().required()
     }
 
-    const result = Joi.validate(req.body, schema);
+    return Joi.validate(song, schema);
+}
+
+app.post('/api/songs', (req,res)=>{
+    const result = validateSong(req.body);
 
     if(result.error){
         res.status(400).send(result.error.details[0].message);
@@ -55,6 +59,50 @@ app.post('/api/songs', (req,res)=>{
     songs.push(song);
     res.send(song);
 });
+
+//update a song
+app.put('/api/songs/:id', (req,res)=>{
+    const requestedId = parseInt(req.params.id);
+    const song = songs.find(s =>s.id === requestedId);
+
+    //no song with matchin id in array
+    if(!song) {
+        res.status(404).send(`The song with id ${requestedId} was not found`);
+        return;
+    }
+
+    //validating song with schema
+    const result = validateSong(req.body);
+
+    if(result.error){
+        res.status(400).send(result.error.details[0].message);
+        return;
+    }
+
+    //update
+    song.name = req.body.name;
+    song.singer = req.body.singer;
+    song.genre = req.body.genre;
+    res.send(song);
+
+});
+
+app.delete('/api/songs/:id',(req,res)=>{
+    const requestedId = parseInt(req.params.id);
+    const song = songs.find(s =>s.id === requestedId);
+
+    //no song with matchin id in array
+    if(!song) {
+        res.status(404).send(`The song with id ${requestedId} was not found`);
+        return;
+    }
+
+    //song exists so I can go forward and delete it
+    let index = songs.indexOf(song);
+    songs.splice(index,1);
+    res.send(song);
+});
+
 
 //listen
 const port = process.env.PORT || 3000;

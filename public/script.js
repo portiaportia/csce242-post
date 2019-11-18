@@ -60,9 +60,22 @@ async function showEditSong(){
     return false;
 }
 
-function deleteSong(){
+async function deleteSong(){
     const id = this.getAttribute("data-id");
-    alert("Item's id is " + id);
+    
+    let response = await fetch(`/api/songs/${id}`, {
+        method: 'DELETE',
+        headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        }
+    });
+
+    if(response.status != 200){
+        console.log("Error adding song");
+        return;
+    }
+
+    showSongs();
     return false;
 }
 
@@ -93,8 +106,27 @@ async function addSong(){
     showSongs();
 }
 
-function editSong(){
-    alert("Editting song");
+async function editSong(){
+    let id = document.getElementById("edit-song-id").textContent;
+    let name = document.getElementById("txt-edit-song-name").value;
+    let singer = document.getElementById("txt-edit-song-singer").value;
+    let genre = document.getElementById("txt-edit-song-genre").value;
+    let song = {"name":name, "singer": singer, "genre": genre};
+
+    let response = await fetch(`/api/songs/${id}`, {
+        method: 'PUT',
+        headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify(song),
+    });
+
+    if(response.status != 200){
+        console.log("Error edditing song");
+    }
+
+    //update the song list
+    showSongs();
 }
 
 window.onload = function(){
